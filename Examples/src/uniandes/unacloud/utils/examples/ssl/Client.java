@@ -1,4 +1,4 @@
-package uniandes.unacloud.utils;
+package uniandes.unacloud.utils.examples.ssl;
 
 import java.io.File;
 
@@ -10,22 +10,23 @@ public class Client extends Thread {
 	@Override
 	public void run() {
 		try {
-			hagale();
+			letsdoit();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public static void hagale() throws Exception {
+	public static void letsdoit() throws Exception {
 		KeyManager.generateKeyStore("RSA", "unacloud", "client.jks", "uniandes", "unacloud", "uniandes", "Bogotá", "Colombia", "FFFFFF");
 		Thread.sleep(5000);
 		KeyManager.addTrustedCerts("unacloud_server", "UnaCloudPublicKey.cer", "client.jks", "FFFFFF");
 		SSLUnaClientSocket ssl = new SSLUnaClientSocket(10000, "157.253.195.22", "JKS", "client.jks", "FFFFFF");
 		System.out.println(ssl.read());
-		ssl.write("Como vas soy cliente");
-		File f = ssl.readFile(10001, "");
+		ssl.write("Hello I am client");
+		File f = ssl.readFile(10001, "./");
 		f.createNewFile();
+		ssl.writeFile(new File("Path"), 10001);
 		ssl.close();
 	}
 
