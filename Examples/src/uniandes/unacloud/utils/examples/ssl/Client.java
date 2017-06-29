@@ -24,8 +24,9 @@ public class Client extends Thread {
 		SSLUnaClientSocket ssl = new SSLUnaClientSocket(10000, "157.253.195.22", "JKS", "client.jks", "FFFFFF");
 		System.out.println(ssl.read());
 		ssl.write("Hello I am client");
-		File f = ssl.readFile(10001, "");
+		File f = ssl.readFile(10001, "./");
 		f.createNewFile();
+		ssl.writeFile(new File("Path"), 10001);
 		ssl.close();
 	}
 

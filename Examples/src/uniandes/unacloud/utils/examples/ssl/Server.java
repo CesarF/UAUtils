@@ -20,12 +20,16 @@ public class Server extends Thread {
 	
 	public static void letsdoit() throws Exception {
 		KeyManager.generateKeyStore("RSA", "unacloud", "server.jks", "uniandes", "unacloud", "uniandes", "Bogotá", "Colombia", "FFFFFF");
-		KeyManager.generatePublicKey("server.jks", "unacloud", "UnaCloudPublicKey2.cer", "FFFFFF");
+		KeyManager.generatePublicKey("server.jks", "unacloud", "UnaCloudPublicKey.cer", "FFFFFF");
 		SSLUnaServerSocket serverSocket = new SSLUnaServerSocket(10000, "JKS", "server.jks", "FFFFFF");
 		SSLUnaServerClientSocket ssl = serverSocket.acceptClient();		
 		ssl.write("Hello I am Server");
 		System.out.println(ssl.read());
-		ssl.sendFile(new File("path_to_file"), 10001);
+		System.out.println("Server sending file");
+		ssl.writeFile(new File("Path"), 10001);
+		System.out.println("Server receiving file");
+		File f = ssl.readFile(10001, "./");
+		f.createNewFile();
 		ssl.close();
 		serverSocket.close();
 		
