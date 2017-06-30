@@ -12,19 +12,36 @@ import java.security.SecureRandom;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 /**
- * 
- * @author Cesar
+ * Responsible of create hashes and random strings
+ * @author CesarF
  * based on //http://howtodoinjava.com/core-java/io/how-to-generate-sha-or-md5-file-checksum-hash-in-java/
  */
 public class HashGenerator {
 		
+	/**
+	 * Represents SHA-256 algorithm
+	 */
 	private static final String SHA_256 = "SHA-256";
 	
+	/**
+	 * Represents SHA-1 algorithm
+	 */
 	private static final String SHA_1 = "SHA-1";
 	
+	/**
+	 * Represents MD5 algorithm
+	 */
 	private static final String MD5 = "MD5";
 	
+	/**
+	 * Secure random instance
+	 */
 	private static SecureRandom random = new SecureRandom();
+	
+	/**
+	 * Char set to generate random keys
+	 */
+	private static final String charset = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	
 	/**
 	 * @param file
@@ -87,9 +104,28 @@ public class HashGenerator {
 	/**
 	 * Using to create a randomString based in a length sent by user
 	 * @param ln
-	 * @return random string based in charset
+	 * @return random string number
 	 */
-	public static String randomString(int ln){
+	public static String randomStringNumber(int ln) {
 		 return new BigInteger(ln, random).toString(32);
+	}
+	
+
+	/**
+	 * Using to create a randomString based in a length sent by user
+	 * @param ln
+	 * @return random string based in char set
+	 * https://stackoverflow.com/questions/39222044/generate-random-string-in-java
+	 */
+	public static String randomString(int ln) {		
+		SecureRandom random = new SecureRandom();
+        if (ln <= 0)
+            throw new IllegalArgumentException("String length must be a positive integer");        
+
+        StringBuilder sb = new StringBuilder(ln);
+        for (int i = 0; i < ln; i++)
+            sb.append(charset.charAt(random.nextInt(charset.length())));      
+
+        return sb.toString();
 	}
 }
