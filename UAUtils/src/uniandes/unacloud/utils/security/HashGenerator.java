@@ -44,8 +44,9 @@ public class HashGenerator {
 	private static final String charset = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	
 	/**
-	 * @param file
-	 * @return
+	 * Generates checksum from a file using MD5 algorithm 
+	 * @param file to generate checksum
+	 * @return checksum
 	 * @throws NoSuchAlgorithmException 
 	 * @throws FileNotFoundException 
 	 */	
@@ -54,11 +55,24 @@ public class HashGenerator {
         return generateCheckSum(digest, file);
 	}
 	
+	/**
+	 * Generates checksum from a file using SHA1 algorithm 
+	 * @param file to generate checksum
+	 * @return checksum
+	 * @throws Exception
+	 */
 	public static String generateChecksumSHA1(File file) throws Exception {		
         MessageDigest digest = MessageDigest.getInstance(SHA_1);
         return generateCheckSum(digest, file);
 	}
 	
+	/**
+	 * Generates checksum from a file using a message digest based in a particular algorithm
+	 * @param digest to process file
+	 * @param file to generate checksum
+	 * @return checksum
+	 * @throws Exception
+	 */
 	public static String generateCheckSum(MessageDigest digest, File file) throws Exception {
 		//Get file input stream for reading the file content
         FileInputStream fis = new FileInputStream(file);
@@ -128,4 +142,5 @@ public class HashGenerator {
 
         return sb.toString();
 	}
+	
 }
