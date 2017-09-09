@@ -12,7 +12,7 @@ public class KeyManager {
 	
 	/**
 	 * Generates a new keyStore based in parameters
-	 * @param algorithm encryption algorithm for key store
+	 * @param algorithm encryption algorithm for key store https://docs.oracle.com/javase/7/docs/technotes/guides/security/jsse/JSSERefGuide.html
 	 * @param alias name for private key located in key store
 	 * @param keyStorePath path where key store will be stored (store name is necessary)
 	 * @param provider name for certificate
