@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
+import java.util.List;
 import java.util.Observer;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Observer;
 public class FileProcessor {
 	
 	/**
-	 * Zip file in a concurrent way using a thread
+	 * Zip file concurrently using a thread
 	 * @param fileName name of file to be zipped
 	 * @param observer to return result when process finish
 	 */
@@ -34,20 +35,40 @@ public class FileProcessor {
 	}
 	
 	/**
-	 * Zip file in a Synchronized way, store file in same parent folder and return new zip file 
+	 * Zip file synchronously, store file in same parent folder and return new zip file 
 	 * @param fileName name of file
 	 * @return zip file
 	 * @throws Exception in case zipping error
 	 */
 	public static File zipFileSync(String fileName) throws Exception {
-		File zipParent = new File(fileName).getParentFile();
+		File file = new File(fileName);
+		File zipParent = null;
+		if(file.isDirectory())
+			zipParent = file;
+		else 
+			zipParent = file.getParentFile();
 		File zip = new File(fileName + ".zip");
 		Zipper.zipIt(zip, zipParent);
 		return zip;
 	}
 	
+	
 	/**
-	 * Deletes file in a concurrent way using a thread
+	 * Zip files synchronously, return new zip file 
+	 * @param fileName name of file
+	 * @param list files
+	 * @return zip file
+	 * @throws Exception in case zipping error
+	 */
+	public static File zipFilesSync(String zipName, List<File> files) throws Exception {
+		
+		File zip = new File(zipName.endsWith(".zip")? zipName: zipName+ ".zip");
+		Zipper.zipThem(zip, files);
+		return zip;
+	}
+	
+	/**
+	 * Deletes file concurrently sing a thread
 	 * @param fileName name of file o directory to be deleted
 	 * @param observer to return result when process finish
 	 */
@@ -67,7 +88,7 @@ public class FileProcessor {
 	}
 	
 	/**
-	 * Deletes file in a Synchronized way and return process result
+	 * Deletes file synchronously and return process result
 	 * @param pathFile  name of file o directory to be deleted
 	 * @return true in case file has been deleted, false in otherwise
 	 * @throws Exception 
